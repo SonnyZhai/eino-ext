@@ -24,6 +24,7 @@ import (
 	"net/http"
 	"runtime/debug"
 
+	compatible "github.com/SonnyZhai/go-openai"
 	"github.com/cloudwego/eino/callbacks"
 	"github.com/cloudwego/eino/components/model"
 	"github.com/cloudwego/eino/schema"
@@ -73,6 +74,9 @@ type Config struct {
 	// ByAzure indicates whether to use Azure OpenAI Service
 	// Required for Azure
 	ByAzure bool `json:"by_azure"`
+
+	// ByCompatible indicates whether to use OpenAI compatible API
+	ByCompatible bool `json:"by_compatible"`
 
 	// BaseURL is the Azure OpenAI endpoint URL
 	// Format: https://{YOUR_RESOURCE_NAME}.openai.azure.com. YOUR_RESOURCE_NAME is the name of your resource that you have created on Azure.
@@ -148,8 +152,9 @@ type Config struct {
 }
 
 type Client struct {
-	cli    *openai.Client
-	config *Config
+	cli           *openai.Client
+	compatibleCli *compatible.Client
+	config        *Config
 
 	tools      []tool
 	rawTools   []*schema.ToolInfo
@@ -161,29 +166,40 @@ func NewClient(ctx context.Context, config *Config) (*Client, error) {
 		return nil, fmt.Errorf("OpenAI client config cannot be nil")
 	}
 
-	var clientConf openai.ClientConfig
+	client := &Client{
+		config: config,
+	}
 
 	if config.ByAzure {
-		clientConf = openai.DefaultAzureConfig(config.APIKey, config.BaseURL)
+		clientConf := openai.DefaultAzureConfig(config.APIKey, config.BaseURL)
 		if config.APIVersion != "" {
 			clientConf.APIVersion = config.APIVersion
 		}
+		clientConf.HTTPClient = config.HTTPClient
+		if clientConf.HTTPClient == nil {
+			clientConf.HTTPClient = http.DefaultClient
+		}
+		client.cli = openai.NewClientWithConfig(clientConf)
+	} else if config.ByCompatible {
+		clientConf := compatible.DefaultCompatibleConfig(config.APIKey, config.BaseURL)
+		clientConf.HTTPClient = config.HTTPClient
+		if clientConf.HTTPClient == nil {
+			clientConf.HTTPClient = http.DefaultClient
+		}
+		client.compatibleCli = compatible.NewClientWithConfig(clientConf)
 	} else {
-		clientConf = openai.DefaultConfig(config.APIKey)
+		clientConf := openai.DefaultConfig(config.APIKey)
 		if len(config.BaseURL) > 0 {
 			clientConf.BaseURL = config.BaseURL
 		}
+		clientConf.HTTPClient = config.HTTPClient
+		if clientConf.HTTPClient == nil {
+			clientConf.HTTPClient = http.DefaultClient
+		}
+		client.cli = openai.NewClientWithConfig(clientConf)
 	}
 
-	clientConf.HTTPClient = config.HTTPClient
-	if clientConf.HTTPClient == nil {
-		clientConf.HTTPClient = http.DefaultClient
-	}
-
-	return &Client{
-		cli:    openai.NewClientWithConfig(clientConf),
-		config: config,
-	}, nil
+	return client, nil
 }
 
 func toOpenAIRole(role schema.RoleType) string {

@@ -1,3 +1,5 @@
+github.com/SonnyZhai/go-openai v1.0.1 h1:dd4OXWhvdkEzbf6Oamxhhw25HfFDQTk1RLcvRyB99jA=
+github.com/SonnyZhai/go-openai v1.0.1/go.mod h1:BfA9JQ/d6el1Tm9yf0+B7eRSi56hxnZLyqF5rxqFIeA=
 github.com/airbrake/gobrake v3.6.1+incompatible/go.mod h1:wM4gu3Cn0W0K7GUuVWnlXZU11AGBXMILnrdOU8Kn00o=
 github.com/bitly/go-simplejson v0.5.0/go.mod h1:cXHtHw4XUPsvGaxgjIAn8PhEWG9NfngEKAMDJEczWVA=
 github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869/go.mod h1:Ekp36dRnpXw/yCqJaO+ZrUyxD+3VXMFFr56k5XYrpB4=

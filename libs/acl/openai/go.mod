@@ -1,4 +1,5 @@
-module github.com/cloudwego/eino-ext/libs/acl/openai
+//module github.com/cloudwego/eino-ext/libs/acl/openai
+module github.com/SonnyZhai/eino-ext/libs/acl/openai
 
 go 1.18
 
@@ -11,6 +12,7 @@ require (
 )
 
 require (
+	github.com/SonnyZhai/go-openai v1.0.1 // indirect
 	github.com/bytedance/sonic v1.13.2 // indirect
 	github.com/bytedance/sonic/loader v0.2.4 // indirect
 	github.com/cloudwego/base64x v0.1.5 // indirect
