@@ -24,7 +24,7 @@ import (
 
 	"github.com/cloudwego/eino/schema"
 
-	"github.com/cloudwego/eino-ext/components/model/openai"
+	"github.com/SonnyZhai/eino-ext/components/model/openai"
 )
 
 func main() {

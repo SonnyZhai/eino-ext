@@ -180,7 +180,7 @@ import (
 	"time"
 
 	"github.com/bytedance/sonic"
-	"github.com/cloudwego/eino-ext/components/model/openai"
+	"github.com/SonnyZhai/eino-ext/components/model/openai"
 	req "github.com/cloudwego/eino-ext/components/tool/httprequest/get"
 	"github.com/cloudwego/eino/components/tool"
 	"github.com/cloudwego/eino/compose"

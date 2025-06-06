@@ -27,7 +27,7 @@ import (
 
 	"github.com/cloudwego/eino/schema"
 
-	"github.com/cloudwego/eino-ext/components/model/openai"
+	"github.com/SonnyZhai/eino-ext/components/model/openai"
 	openai2 "github.com/cloudwego/eino-ext/libs/acl/openai"
 )
 
