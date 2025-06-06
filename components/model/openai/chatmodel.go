@@ -54,6 +54,9 @@ type ChatModelConfig struct {
 	// Required for Azure
 	ByAzure bool `json:"by_azure"`
 
+	// ByCompatible indicates whether to use OpenAI compatible API
+	ByCompatible bool `json:"by_compatible"`
+
 	// BaseURL is the Azure OpenAI endpoint URL
 	// Format: https://{YOUR_RESOURCE_NAME}.openai.azure.com. YOUR_RESOURCE_NAME is the name of your resource that you have created on Azure.
 	// Required for Azure
@@ -135,6 +138,7 @@ func NewChatModel(ctx context.Context, config *ChatModelConfig) (*ChatModel, err
 		}
 
 		nConf = &openai.Config{
+			ByCompatible:     config.ByCompatible,
 			ByAzure:          config.ByAzure,
 			BaseURL:          config.BaseURL,
 			APIVersion:       config.APIVersion,
