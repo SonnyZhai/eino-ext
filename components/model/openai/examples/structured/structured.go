@@ -28,7 +28,7 @@ import (
 	"github.com/cloudwego/eino/schema"
 
 	"github.com/SonnyZhai/eino-ext/components/model/openai"
-	openai2 "github.com/cloudwego/eino-ext/libs/acl/openai"
+	openai2 "github.com/SonnyZhai/eino-ext/libs/acl/openai"
 )
 
 func main() {
